@@ -15,5 +15,7 @@ public interface MemoMapper {
     // MemoGetRes로 줌 mapper>service > controller
     List<MemoGetRes> findAll (MemoGetReq req);
     MemoGetOneRes findById(int id);
+
+    int deleteById(int id);
 }
 

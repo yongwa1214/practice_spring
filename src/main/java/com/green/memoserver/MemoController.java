@@ -18,6 +18,7 @@ import java.util.List;
        // 이건 어느 클래스에서 어느 부분에 로그가 찍히는지 알 수있다.
 public class MemoController {
     private final MemoService memoService;
+    private final MemoMapper memoMapper;
 
     //Create
     //(post) /api/memo, 응답으로는 저장 성공 내용들이 백엔드 서버에 출력
@@ -37,9 +38,9 @@ public class MemoController {
     }
 
     // 아이템 들고오기 디테일
-    @GetMapping("/{memoId}")
-    public MemoGetOneRes getMemo(@PathVariable int memoId){
-
+    @GetMapping("{memoId}")
+    public MemoGetOneRes getMemo(@PathVariable int memoId) {
+        log.info("memoId={}", memoId);
         return memoService.findById(memoId);
     }
 
@@ -54,6 +55,7 @@ public class MemoController {
     @DeleteMapping
     public String delMemo(@RequestParam("memo_id") int memoId ){
         log.info("memo_id:{}", memoId);
-        return "삭제완료";
+        int result3 = memoService.deleteById(memoId);
+        return "삭제 완료";
     }
 }

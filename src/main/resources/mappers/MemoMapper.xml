@@ -21,9 +21,15 @@
         ORDER BY id DESC
     </select>
 
-    <select id = "findById">
+    <select id="findById">
         SELECT *
-          FROM memo
-         WHERE id = #{id}
+        FROM memo
+        WHERE id = #{id}
     </select>
+
+    <delete id="deleteById">
+        DELETE
+        FROM memo
+        WHERE id = #{id}
+    </delete>
 </mapper>

@@ -30,8 +30,12 @@ public class MemoService {
         return memoMapper.findAll(req);
     }
 
-    public MemoGetOneRes findById(int id){
+    public MemoGetOneRes findById(int id) {
         return memoMapper.findById(id);
+    }
+
+    public int deleteById(int id){
+        return memoMapper.deleteById(id);
     }
 
 }
