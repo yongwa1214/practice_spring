@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace="xml파일과 세트인 mapper interface의 풀 네임이 들어가야 한다. -->
+<mapper namespace="com.green.memoserver.MemoMapper">
+
+    <insert id="save">
+        INSERT INTO memo
+        SET title = #{title}
+        , content = #{ctnts}
+    </insert>
+
+<!--  # 과 $의 차이
+문자열일 때 #은 ''을 붙여줌 $는 안 붙여줌-->
+    <select id="findAll">
+        SELECT id, title, created_at
+          FROM memo
+        <if test="searchText != null and searchText != '' ">
+            WHERE title LIKE '%${searchText}%'
+                OR content LIKE '%${searchText}%'
+        </if>
+        ORDER BY id DESC
+    </select>
+
+    <select id = "findById">
+        SELECT *
+          FROM memo
+         WHERE id = #{id}
+    </select>
+</mapper>
