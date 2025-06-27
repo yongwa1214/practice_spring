@@ -27,6 +27,15 @@
         WHERE id = #{id}
     </select>
 
+    <update id="modify">
+        UPDATE memo
+        Set title= #{title}
+        , content= #{ctnts}
+        Where id = #{memoId}
+<!-- 받은 이름으로 넣어야함 -->
+
+    </update>
+
     <delete id="deleteById">
         DELETE
         FROM memo

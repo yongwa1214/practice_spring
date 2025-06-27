@@ -1,9 +1,6 @@
 package com.green.memoserver;
 
-import com.green.memoserver.model.MemoGetOneRes;
-import com.green.memoserver.model.MemoGetReq;
-import com.green.memoserver.model.MemoGetRes;
-import com.green.memoserver.model.MemoPostReq;
+import com.green.memoserver.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +33,10 @@ public class MemoService {
 
     public int deleteById(int id){
         return memoMapper.deleteById(id);
+    }
+
+    public int modify(MemoPutReq req){ // 수정하면 json으로 받음 객체라는뜻
+        return memoMapper.modify(req);
     }
 
 }

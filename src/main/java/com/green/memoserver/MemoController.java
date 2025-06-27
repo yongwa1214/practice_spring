@@ -1,6 +1,7 @@
 package com.green.memoserver;
 
 
+import com.green.memoserver.config.model.ResultResponse;
 import com.green.memoserver.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,39 +24,42 @@ public class MemoController {
     //Create
     //(post) /api/memo, 응답으로는 저장 성공 내용들이 백엔드 서버에 출력
     @PostMapping
-    public String postMemo(@RequestBody MemoPostReq req) { //JSON로 넘어오는구나
+    public ResultResponse<Integer> postMemo(@RequestBody MemoPostReq req) { //JSON로 넘어오는구나
         log.info("req={}", req);
-        int result =  memoService.save(req);
-        return result == 1 ? "저장 성공" : "저장 실패";
+        int result = memoService.save(req);
+        return new ResultResponse<>("등록 성공", result);
     }
 
     //Read
     //리스트 들고오기
     @GetMapping
-    public List<MemoGetRes> getMemo(@ModelAttribute MemoGetReq req){
+    public ResultResponse <List<MemoGetRes>> getMemo(@ModelAttribute MemoGetReq req){
         log.info("req={}",req);
-        return memoService.findAll(req);
+        List<MemoGetRes> result = memoService.findAll(req);
+        String message = String.format("Rows: %d", result.size());
+        return new ResultResponse<>(message, result);
     }
 
     // 아이템 들고오기 디테일
     @GetMapping("{memoId}")
-    public MemoGetOneRes getMemo(@PathVariable int memoId) {
+    public ResultResponse<MemoGetOneRes> getMemo(@PathVariable int memoId) {
         log.info("memoId={}", memoId);
-        return memoService.findById(memoId);
+        MemoGetOneRes result = memoService.findById(memoId);
+        return new ResultResponse<>("조회 성공", result);
     }
 
     //Update
     @PutMapping
-    public String putMemo(@RequestBody MemoPutReq req){
-        log.info("req{}:", req);
-        return "수정완료";
+    public ResultResponse<Integer> putMemo(@RequestBody MemoPutReq req){
+        int result = memoService.modify(req);
+        return new ResultResponse<>("수정 성공", result);
     }
 
     //Delete
     @DeleteMapping
-    public String delMemo(@RequestParam("memo_id") int memoId ){
+    public ResultResponse<Integer> delMemo(@RequestParam("memo_id") int memoId ){
         log.info("memo_id:{}", memoId);
-        int result3 = memoService.deleteById(memoId);
-        return "삭제 완료";
+        int result = memoService.deleteById(memoId);
+        return new ResultResponse<>("삭제 성공", result); // 여기선 정상적인 것만 취급하고 예외는 따로 처리한다
     }
 }
