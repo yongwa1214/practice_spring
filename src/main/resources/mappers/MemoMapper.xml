@@ -10,18 +10,43 @@
     </insert>
 
 <!--  # 과 $의 차이
-문자열일 때 #은 ''을 붙여줌 $는 안 붙여줌-->
-    <select id="findAll">
+문자열일 때 #은 ''을 붙여줌 $는 안 붙여줌
+#: 자동으로 '' 붙여줌 $는 안 붙여줌
+    그냥 값만 입력하고 싶을 때 예) 이미 ''가 쓰였을 때
+    $를 사용하면 된다 -->
+
+
+<!--
+    동적 퀴리를 만들기 위함
+    if문 부분은 추가가 될 수도 있고 안 될수도 있음
+    쿼리문에 if로 둘러쌓인 부분이 생길수도? 아닐수도?
+
+    order by id desc >> 최신글부터 가져오기 위함
+ -->
+    <select id ="findAll">
         SELECT id, title, created_at
           FROM memo
-        <if test="searchText != null and searchText != '' ">
+        <if test ="searchText != null and searchText != '' ">
             WHERE title LIKE '%${searchText}%'
                 OR content LIKE '%${searchText}%'
         </if>
         ORDER BY id DESC
     </select>
 
+<!--    <select id ="findAll">
+        <bind name ="pattern" value = "'%' + _ parameter.getSearchText()+'%'" />
+        SELECT id, title, created_at
+        FROM memo
+        <if test ="searchText != null and searchText != '' ">
+            WHERE title LIKE #{pattern}
+            OR content LIKE #{pattern}
+        </if>
+        ORDER BY id DESC
+    </select> -->
+
+
     <select id="findById">
+
         SELECT *
         FROM memo
         WHERE id = #{id}

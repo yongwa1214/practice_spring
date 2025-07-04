@@ -1,4 +1,4 @@
-package com.green.memoserver;
+package com.green.memoserver.config;
 
 
 import org.springframework.context.annotation.Configuration;
